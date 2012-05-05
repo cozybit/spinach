@@ -1,0 +1,9 @@
+This folder contains the configuration files required to build OpenWRT.
+	1. .config
+		- Configures kernel for OpenWRT
+
+	2. qemu-ifup
+		- Enables Qemu to run simulated interface
+
+	3. wireless
+		- Builds OpenWRT with two wi-fi radios in a mesh configuration
