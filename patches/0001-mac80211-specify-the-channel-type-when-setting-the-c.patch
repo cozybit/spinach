@@ -1,0 +1,36 @@
+From 4f855ca9bafdeb340eae141c1dddf92cbb84e947 Mon Sep 17 00:00:00 2001
+From: Guillermo A. Nunez <guillermo@cozybit.com>
+Date: Tue, 8 May 2012 19:46:42 -0700
+Subject: [PATCH] mac80211: specify the channel type when setting the channel.
+
+This is needed to allow HT mode in mesh ifaces.
+
+Signed-off-by: Guillermo A. Nunez <guillermo@cozybit.com>
+---
+ package/mac80211/files/lib/wifi/mac80211.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/package/mac80211/files/lib/wifi/mac80211.sh b/package/mac80211/files/lib/wifi/mac80211.sh
+index 1a4d7c1..9dba271 100644
+--- a/package/mac80211/files/lib/wifi/mac80211.sh
++++ b/package/mac80211/files/lib/wifi/mac80211.sh
+@@ -289,6 +289,7 @@ mac80211_generate_mac() {
+ enable_mac80211() {
+ 	local device="$1"
+ 	config_get channel "$device" channel
++	config_get htmode "$device" htmode
+ 	config_get vifs "$device" vifs
+ 	config_get txpower "$device" txpower
+ 	config_get country "$device" country
+@@ -394,7 +395,7 @@ enable_mac80211() {
+ 			# We attempt to set the channel for all interfaces, although
+ 			# mac80211 may not support it or the driver might not yet
+ 			# for ap mode this is handled by hostapd
+-			[ -n "$fixed" -a -n "$channel" ] && iw dev "$ifname" set channel "$channel"
++			[ -n "$fixed" -a -n "$channel" ] && iw dev "$ifname" set channel "$channel" $htmode
+ 		fi
+ 
+ 		i=$(($i + 1))
+-- 
+1.7.1
+
