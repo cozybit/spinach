@@ -6,4 +6,8 @@ DIR=spinach
 [ `basename $PWD` == ${DIR} ] || { echo This script must be executed from ${DIR}\'s root directory; exit -1; }
 
 git clone git://nbd.name/openwrt.git --no-checkout
-cd openwrt; git checkout ${OPENWRT_COMMIT}; cd ..
+cd openwrt
+git checkout ${OPENWRT_COMMIT}
+./scripts/feeds update
+./scripts/feeds install -a
+cd ..
