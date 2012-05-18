@@ -1,0 +1,60 @@
+Hey All,
+
+We are happy to announce the first release (0.1) of the mesh plant project.
+This release converts the MeshNodes in mesh L2 bridges.
+
+Keep in mind that mesh nodes are still under heavy development. This release
+should be used with demo/sales proposes only.
+
+RELEASE NOTES
+################
+
+VERSION
+
+MeshNode release 0.1
+
++ COMPONENTS
+
+ - Flashable images for a Mesh Node (Bullet Station)
+
++ FEATURES
+
+ - MeshNodes configured as wireless L2 bridge.
+ - HT mode enabled (Channel 11, HT20).
+ - Reach MeshNodes using mDNS ( PM-<last_2_MAC_byte> ).
+ - Default root password
+     user: root
+     password: plantmesh
+
++ HOWTO FLASH IMAGES
+
+1- Connect the MeshNode to a LAN with the network IP: 192.168.1.X. Make
+  sure that 192.168.1.20 is free, because that's the default IP of the
+  MeshNode while in "Upgrade Mode".
+
+2- Power on the MeshNode while holding the reset button (use a
+clip/thin pen). Hold the reset
+  button until you see two red and orange LEDs blinking.
+
+  Quick sanity check: see if the station is up in the network
+
+  $ ping 192.168.1.20
+
+3- Flashing the firmware:
+
+  $ atftp -p -l plant_mesh-mesh_node-release_0.1.bin 192.168.1.20
+
+  After the transfer completes, it will take a few minutes for the flashing to
+  complete.  When it completes, the MeshNode will reset and the LED pattern
+  will change.
+
++ HOWTO TEST IT
+
+1- Connect MeshNode A to the LAN (a DHCP server is expected).
+2- Connect MeshNode B to a laptop.
+3- Ping any node in the LAN.
+
+4- To access the Mesh Nodes:
+
+   ssh root@PM-<2_last_byte_mac>.local
+
