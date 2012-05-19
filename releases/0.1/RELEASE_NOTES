@@ -1,10 +1,10 @@
 Hey All,
 
 We are happy to announce the first release (0.1) of the mesh plant project.
-This release converts the MeshNodes in mesh L2 bridges.
+This release converts the MeshNodes into mesh L2 bridges.
 
 Keep in mind that mesh nodes are still under heavy development. This release
-should be used with demo/sales proposes only.
+should be used for demo/sales purposes only.
 
 RELEASE NOTES
 ################
@@ -19,7 +19,7 @@ MeshNode release 0.1
 
 + FEATURES
 
- - MeshNodes configured as wireless L2 bridge.
+ - MeshNodes configured as L2 bridges between wireless and ethernet.
  - HT mode enabled (Channel 11, HT20).
  - Reach MeshNodes using mDNS ( PM-<last_2_MAC_byte> ).
  - Default root password
@@ -52,7 +52,7 @@ clip/thin pen). Hold the reset
 
 1- Connect MeshNode A to the LAN (a DHCP server is expected).
 2- Connect MeshNode B to a laptop.
-3- Ping any node in the LAN.
+3- Ping any node in the LAN from the laptop.
 
 4- To access the Mesh Nodes:
 
