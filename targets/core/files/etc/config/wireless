@@ -8,7 +8,7 @@ config wifi-iface
 	option device   radio0
 	option network  lan
 	option mode     mesh
-	option ssid     plant-mesh
+	option mesh_id  plant-mesh
 	option encryption none
 
 config wifi-device  radio1
