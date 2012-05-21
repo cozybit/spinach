@@ -1,0 +1,25 @@
+config wifi-device  radio0
+	option type     mac80211
+	option channel  11
+	option phy	phy0
+	option hwmode	11g
+
+config wifi-iface
+	option device   radio0
+	option network  wlan
+	option mode     mesh
+	option mesh_id  plant-mesh
+	option encryption none
+
+config wifi-device  radio1
+	option type     mac80211
+	option channel  36
+	option phy	phy1
+	option hwmode	11a
+
+config wifi-iface
+	option device   radio1
+	option network  wlan
+	option mode     ap
+	option ssid     plant-mesh-AP
+	option encryption none
