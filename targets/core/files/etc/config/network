@@ -8,3 +8,7 @@ config interface lan
 	option ifname	eth0
 	option type	bridge
 	option proto	dhcp
+
+config interface ctl
+        option ifname   eth1
+        option proto    dhcp
