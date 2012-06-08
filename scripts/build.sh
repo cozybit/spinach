@@ -1,6 +1,6 @@
 #! /bin/bash
 
-[ `basename $PWD` == "spinach" ] || { echo This script must be executed from the spinach\'s root directory; exit -1; }
+source `dirname $0`/common.sh
 
 cd openwrt
 yes '' | make $*

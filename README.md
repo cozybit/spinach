@@ -34,6 +34,11 @@ Building:
   
   openwrt/bin/ar71xx
 
+- Push it:
+
+  $ ./scripts/push.sh -h <spinach host> -f <sysupgrade fw .bin>
+
+
 Development:
 ============
 

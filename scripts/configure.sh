@@ -1,6 +1,6 @@
 #! /bin/bash
 
-DIR=spinach
+source `dirname $0`/common.sh
 USAGE="./scripts/configure.sh -t <target>"
 
 ##TODO improve the option system
@@ -13,8 +13,6 @@ while getopts  "t:j:" options; do
 done
 
 [ "$DEBUG" == 'y' ] && set -x
-
-[ `basename $PWD` == ${DIR} ] || { echo This script must be executed from ${DIR} root directory; exit -1; }
 
 [ "${TARGET}" != "" ] || { echo Please, specify a valid target; echo ${USAGE}; exit -1; }
 
