@@ -3,4 +3,4 @@
 source `dirname $0`/common.sh
 
 cd openwrt
-yes '' | make $*
+yes '' | make -j$SPINACH_JOBS $*
