@@ -25,7 +25,7 @@ FW=`basename $FW_PATH`
 
 for host in $HOSTS; do
         echo updating $host
-        _scp $FW_PATH root@${host}.local:/tmp/ || { echo "${host}: couldn't copy fw!"; continue; } &
-        _ssh root@${host}.local "source /etc/profile && sysupgrade /tmp/${FW}" & # can't really get the return code from here, so assume success :P
+        _scp $FW_PATH root@${host}.local:/tmp/ || { echo "${host}: couldn't copy fw!"; continue; }
+        _ssh root@${host}.local "source /etc/profile && sysupgrade /tmp/${FW}" # can't really get the return code from here, so assume success :P
 done
 
