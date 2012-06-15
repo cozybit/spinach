@@ -18,6 +18,9 @@ done
 
 [ -d targets/${TARGET} ] || { echo The target \"${TARGET}\" does not exist. Please check targets/ directory for supported targets; exit -1; }
 
+# first link generic files
+ln -fs ../targets/common/files openwrt/
+
 # create symbolic links to the target specific config files
 ln -fs ../targets/${TARGET}/openwrt.config openwrt/.config
 ln -fs ../targets/${TARGET}/files openwrt/
