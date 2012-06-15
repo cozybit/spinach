@@ -1,4 +1,4 @@
-From cd40194ca109b1f547732294bca4e5cba99964a4 Mon Sep 17 00:00:00 2001
+From 361bd2430c44693db8978e4004ed355f4b5f1bab Mon Sep 17 00:00:00 2001
 From: Peter Naulls <peter@chocky.org>
 Date: Thu, 25 Aug 2011 22:07:14 +0000
 Subject: [PATCH] authsae o11s authentication daemon
@@ -19,7 +19,7 @@ Signed-off-by: Peter Naulls <peter@chocky.org>
 
 diff --git a/package/net/authsae/Makefile b/package/net/authsae/Makefile
 new file mode 100644
-index 0000000..1611fff
+index 0000000..4da1198
 --- /dev/null
 +++ b/package/net/authsae/Makefile
 @@ -0,0 +1,53 @@
@@ -41,7 +41,7 @@ index 0000000..1611fff
 +PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 +PKG_SOURCE_PROTO:=git
 +PKG_SOURCE_URL:=git://github.com/cozybit/authsae.git
-+PKG_REV:=d681f38bcda2016b5b115e17547fd6d0777a922c
++PKG_REV:=HEAD
 +PKG_SOURCE_VERSION:=$(PKG_REV)
 +
 +PKG_BUILD_PARALLEL:=1
@@ -71,8 +71,8 @@ index 0000000..1611fff
 +	/etc/authsae.cfg
 +endef
 +
-+define Build/compile
-+	$(MAKE) -C $(PKG_BUILD_DIR)/linux IS_OPENWRT=1
++define Build/Compile
++	$(MAKE) -C $(PKG_BUILD_DIR)/linux $(TARGET_CONFIGURE_OPTS)
 +endef
 +
 +$(eval $(call BuildPackage,authsae))
