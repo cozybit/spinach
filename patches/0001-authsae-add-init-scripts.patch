@@ -1,15 +1,15 @@
-From 13859bfc2e901a78d0e6d8a032aace4ad0352351 Mon Sep 17 00:00:00 2001
+From 588b6bd285dd34428fe45f1ac004416af0aa347a Mon Sep 17 00:00:00 2001
 From: Thomas Pedersen <thomas@cozybit.com>
 Date: Thu, 14 Jun 2012 17:42:20 -0700
 Subject: [PATCH] authsae: add init scripts
 
 Now specifying "mesh_pass" in the vif config will start authsae.
 ---
- package/mac80211/files/lib/wifi/mac80211.sh |   71 ++++++++++++++++++++++++++-
- 1 files changed, 70 insertions(+), 1 deletions(-)
+ package/mac80211/files/lib/wifi/mac80211.sh |   74 ++++++++++++++++++++++++++-
+ 1 files changed, 73 insertions(+), 1 deletions(-)
 
 diff --git a/package/mac80211/files/lib/wifi/mac80211.sh b/package/mac80211/files/lib/wifi/mac80211.sh
-index 8bb9c42..f2852bc 100644
+index 8bb9c42..a7f5edc 100644
 --- a/package/mac80211/files/lib/wifi/mac80211.sh
 +++ b/package/mac80211/files/lib/wifi/mac80211.sh
 @@ -1,6 +1,65 @@
@@ -78,7 +78,17 @@ index 8bb9c42..f2852bc 100644
  mac80211_hostapd_setup_base() {
  	local phy="$1"
  	local ifname="$2"
-@@ -352,8 +411,12 @@ enable_mac80211() {
+@@ -258,6 +317,9 @@ disable_mac80211() (
+ 			grep "$wdev" /proc/$pid/cmdline >/dev/null && \
+ 				kill $pid
+ 		done
++		for pid in `pidof meshd-nl80211`; do
++			kill $pid
++		done
+ 		ifconfig "$wdev" down 2>/dev/null
+ 		unbridge "$dev"
+ 		iw dev "$wdev" del
+@@ -352,8 +414,12 @@ enable_mac80211() {
  				[ "$apidx" -gt 1 ] || iw phy "$phy" interface add "$ifname" type managed
  			;;
  			mesh)
@@ -92,7 +102,7 @@ index 8bb9c42..f2852bc 100644
  			;;
  			monitor)
  				iw phy "$phy" interface add "$ifname" type monitor
-@@ -517,6 +580,12 @@ enable_mac80211() {
+@@ -517,6 +583,12 @@ enable_mac80211() {
  					}
  				fi
  			;;
