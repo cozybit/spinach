@@ -7,4 +7,8 @@ pushd openwrt
 git checkout ${OPENWRT_COMMIT}
 ./scripts/feeds update
 ./scripts/feeds install -a
-popd
+
+# apply patches
+git am ../patches/*
+popd > /dev/null
+
