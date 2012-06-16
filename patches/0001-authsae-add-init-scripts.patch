@@ -1,4 +1,4 @@
-From 249ff4bdaceae5802c7e47b3ff44c49d5ed9c90c Mon Sep 17 00:00:00 2001
+From 13859bfc2e901a78d0e6d8a032aace4ad0352351 Mon Sep 17 00:00:00 2001
 From: Thomas Pedersen <thomas@cozybit.com>
 Date: Thu, 14 Jun 2012 17:42:20 -0700
 Subject: [PATCH] authsae: add init scripts
@@ -9,7 +9,7 @@ Now specifying "mesh_pass" in the vif config will start authsae.
  1 files changed, 70 insertions(+), 1 deletions(-)
 
 diff --git a/package/mac80211/files/lib/wifi/mac80211.sh b/package/mac80211/files/lib/wifi/mac80211.sh
-index 461b248..9c8a05b 100644
+index 8bb9c42..f2852bc 100644
 --- a/package/mac80211/files/lib/wifi/mac80211.sh
 +++ b/package/mac80211/files/lib/wifi/mac80211.sh
 @@ -1,6 +1,65 @@
@@ -38,7 +38,7 @@ index 461b248..9c8a05b 100644
 +		*a*) band=11a;;
 +	esac
 +
-+	cat >> "$cfgfile" <<EOF
++	cat > "$cfgfile" <<EOF
 +authsae:
 +{
 + sae:
@@ -58,7 +58,7 @@ index 461b248..9c8a05b 100644
 +    debug = 1;
 +    mediaopt = 1;
 +    band = "$band";
-+    channel = "$channel";
++    channel = $channel;
 +    htmode = "$htmode";
 +  };
 +};
@@ -78,21 +78,21 @@ index 461b248..9c8a05b 100644
  mac80211_hostapd_setup_base() {
  	local phy="$1"
  	local ifname="$2"
-@@ -353,8 +412,12 @@ enable_mac80211() {
+@@ -352,8 +411,12 @@ enable_mac80211() {
  				[ "$apidx" -gt 1 ] || iw phy "$phy" interface add "$ifname" type managed
  			;;
  			mesh)
-+				local meshid
++				local start_mesh
  				config_get mesh_id "$vif" mesh_id
 -				iw phy "$phy" interface add "$ifname" type mp mesh_id "$mesh_id"
 +				config_get mesh_pass "$vif" mesh_pass
 +				# authsae starts the mesh otherwise
-+				[ -z "$mesh_pass" ] && meshid='mesh_id="$mesh_id"'
-+				iw phy "$phy" interface add "$ifname" type mp $meshid
++				[ -z "$mesh_pass" ] && start_mesh="mesh_id $mesh_id"
++				iw phy "$phy" interface add "$ifname" type mp $start_mesh
  			;;
  			monitor)
  				iw phy "$phy" interface add "$ifname" type monitor
-@@ -518,6 +581,12 @@ enable_mac80211() {
+@@ -517,6 +580,12 @@ enable_mac80211() {
  					}
  				fi
  			;;
