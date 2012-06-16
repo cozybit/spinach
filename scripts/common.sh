@@ -15,6 +15,23 @@ _scp () {
 	scp -i ${SSH_KEYFILE} $*
 }
 
+# return openwrt image file path from type
+# get_openwrt_img <node_type> <img_type>
+get_openwrt_img() {
+
+	case $1 in
+		node)
+			echo "openwrt/bin/ar71xx/openwrt-ar71xx-generic-ubnt-bullet-m-squashfs-${2}.bin"
+		;;
+		core|station)
+			echo "openwrt/bin/ar71xx/openwrt-ar71xx-generic-ubnt-rspro-squashfs-${2}.bin"
+		;;
+		*)
+			fail "couldn't get img path: unknown node type!"
+		;;
+	esac
+}
+
 [ -z ${SPINACH_DIR} -o `basename $PWD` == ${SPINACH_DIR} ] || fail "This script must be executed from ${DIR}\'s root directory"
 
 # enumerate reachable nodes

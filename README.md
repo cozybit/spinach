@@ -38,6 +38,13 @@ Building:
 
   $ ./scripts/push.sh -h <spinach host> -f <sysupgrade fw .bin>
 
+- Creat a release:
+
+  $ ./scripts/release.sh -t <node type> -v <version>
+
+  The openwrt images will end up in "releases/<version>/<type>/"
+
+
 
 Development:
 ============
