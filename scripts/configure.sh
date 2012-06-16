@@ -25,10 +25,10 @@ ln -fs ../targets/common/files openwrt/
 ln -fs ../targets/${TARGET}/openwrt.config openwrt/.config
 ln -fs ../targets/${TARGET}/files openwrt/
 
-# copy openwrt .config file
-cd openwrt && yes '' | make oldconfig &> /dev/null && cd ..
-
 # apply patches
 pushd openwrt
 git am ../patches/*
 popd
+
+# copy openwrt .config file
+cd openwrt && yes '' | make oldconfig &> /dev/null && cd ..
