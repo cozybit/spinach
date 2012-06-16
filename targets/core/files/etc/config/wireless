@@ -1,27 +1,28 @@
 config wifi-device  radio0
-	option type     mac80211
-	option channel  11
-	option phy	phy0
-	option hwmode	11g
+        option type     mac80211
+        option channel  11
+        option phy      phy0
+        option hwmode   11g
+	option disable 	1
 
-config wifi-iface
-	option device   radio0
-	option network  lan
-	option mode     mesh
-	option mesh_id  plant-mesh
-	option encryption none
+config wifi-iface wlan0
+        option device   radio0
+        option network  lan
+        option mode     mesh
+        option mesh_id  foo
 
 config wifi-device  radio1
-	option type     mac80211
-	option channel  36
-	option macaddr	00:21:a4:31:18:1d
-	option hwmode	11a
-	option disabled 1
+        option type     mac80211
+        option channel  11
+        option phy      phy1
+        option hwmode   11g
+        option htmode   HT20
+        list ht_capab   SHORT-GI-40
+        list ht_capab   DSSS_CCK-40
 
-config wifi-iface
-	option device   radio1
-	option network  lan
-	option mode     ap
-	option ssid     plant-mesh-AP
-	option encryption none
-
+config wifi-iface wlan1
+        option device   radio1
+        option network  lan
+        option mode     mesh
+        option mesh_id  plant-mesh
+	option mesh_pass hello
