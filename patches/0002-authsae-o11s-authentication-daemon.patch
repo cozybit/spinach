@@ -1,7 +1,7 @@
-From 361bd2430c44693db8978e4004ed355f4b5f1bab Mon Sep 17 00:00:00 2001
+From 1a5ad2cbfc24b8380b413665084693b20b920445 Mon Sep 17 00:00:00 2001
 From: Peter Naulls <peter@chocky.org>
 Date: Thu, 25 Aug 2011 22:07:14 +0000
-Subject: [PATCH] authsae o11s authentication daemon
+Subject: [PATCH 2/3] authsae o11s authentication daemon
 
 This adds the o11s cozybit authentication daemon fork of authsae (see o11s.org).
   This requires forthcoming work on o11s in the
@@ -19,7 +19,7 @@ Signed-off-by: Peter Naulls <peter@chocky.org>
 
 diff --git a/package/net/authsae/Makefile b/package/net/authsae/Makefile
 new file mode 100644
-index 0000000..4da1198
+index 0000000..bb8885e
 --- /dev/null
 +++ b/package/net/authsae/Makefile
 @@ -0,0 +1,53 @@
@@ -77,7 +77,7 @@ index 0000000..4da1198
 +
 +$(eval $(call BuildPackage,authsae))
 diff --git a/package/openssl/Makefile b/package/openssl/Makefile
-index b9b9b31..8bbe2e9 100644
+index a696dd7..51231bc 100644
 --- a/package/openssl/Makefile
 +++ b/package/openssl/Makefile
 @@ -74,7 +74,7 @@ endef
@@ -101,5 +101,5 @@ index b9b9b31..8bbe2e9 100644
  
  define Build/Configure
 -- 
-1.7.1
+1.7.5.4
 
