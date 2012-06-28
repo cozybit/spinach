@@ -1,4 +1,4 @@
-From b6024f0a109aaff3f77d9fd67096a99d8ab704d1 Mon Sep 17 00:00:00 2001
+From b46c05a08ea806b899a87c24f50ee31bc36346c4 Mon Sep 17 00:00:00 2001
 From: "Guillermo A. Nunez" <guillermo@cozybit.com>
 Date: Tue, 8 May 2012 19:46:42 -0700
 Subject: [PATCH 1/3] mac80211: specify the channel type when setting the

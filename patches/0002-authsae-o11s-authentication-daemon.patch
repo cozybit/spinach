@@ -1,4 +1,4 @@
-From dfdbaac938d71883fa8c8c10a9de26af48290645 Mon Sep 17 00:00:00 2001
+From c00e529c83b1d82a444f9f22b602099e231c74af Mon Sep 17 00:00:00 2001
 From: Peter Naulls <peter@chocky.org>
 Date: Thu, 25 Aug 2011 22:07:14 +0000
 Subject: [PATCH 2/3] authsae o11s authentication daemon
@@ -12,16 +12,16 @@ I have not added any init scripts, etc.
 
 Signed-off-by: Peter Naulls <peter@chocky.org>
 ---
- package/net/authsae/Makefile |   53 ++++++++++++++++++++++++++++++++++++++++++
- package/openssl/Makefile     |    6 ++++-
+ package/authsae/Makefile |   53 ++++++++++++++++++++++++++++++++++++++++++++++
+ package/openssl/Makefile |    6 ++++-
  2 files changed, 58 insertions(+), 1 deletions(-)
- create mode 100644 package/net/authsae/Makefile
+ create mode 100644 package/authsae/Makefile
 
-diff --git a/package/net/authsae/Makefile b/package/net/authsae/Makefile
+diff --git a/package/authsae/Makefile b/package/authsae/Makefile
 new file mode 100644
 index 0000000..bb8885e
 --- /dev/null
-+++ b/package/net/authsae/Makefile
++++ b/package/authsae/Makefile
 @@ -0,0 +1,53 @@
 +
 +# Copyright (C) 2007-2010 OpenWrt.org
