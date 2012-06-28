@@ -14,4 +14,4 @@ config wifi-iface wlan0
         option network  lan
         option mode     mesh
         option mesh_id  plant-mesh
-	option mesh_pass hello
+	option mesh_key hello

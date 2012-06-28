@@ -1,4 +1,4 @@
-From a7e8846af9372c670b2d8e82969a7daa6318d623 Mon Sep 17 00:00:00 2001
+From 2ea2e26793f0d13cfa9e53ea4cd2c78e6bd68996 Mon Sep 17 00:00:00 2001
 From: Thomas Pedersen <thomas@cozybit.com>
 Date: Thu, 14 Jun 2012 17:42:20 -0700
 Subject: [PATCH 3/3] authsae: add init scripts
@@ -9,7 +9,7 @@ Now specifying "mesh_pass" in the vif config will start authsae.
  1 files changed, 74 insertions(+), 1 deletions(-)
 
 diff --git a/package/mac80211/files/lib/wifi/mac80211.sh b/package/mac80211/files/lib/wifi/mac80211.sh
-index 461b248..5f7a570 100644
+index 461b248..ea41006 100644
 --- a/package/mac80211/files/lib/wifi/mac80211.sh
 +++ b/package/mac80211/files/lib/wifi/mac80211.sh
 @@ -1,6 +1,66 @@
@@ -22,7 +22,7 @@ index 461b248..5f7a570 100644
 +
 +	config_get ifname "$vif" ifname
 +	config_get meshid "$vif" mesh_id
-+	config_get mesh_pass "$vif" mesh_pass
++	config_get mesh_key "$vif" mesh_key
 +	config_get device "$vif" device
 +	config_get hwmode "$device" hwmode
 +	config_get channel "$device" channel
@@ -44,7 +44,7 @@ index 461b248..5f7a570 100644
 + sae:
 +  {
 +    debug = 480;
-+    password = "$mesh_pass";
++    password = "$mesh_key";
 +    group = [19, 26, 21, 25, 20];
 +    blacklist = 5;
 +    thresh = 5;
@@ -96,9 +96,9 @@ index 461b248..5f7a570 100644
 +				local start_mesh
  				config_get mesh_id "$vif" mesh_id
 -				iw phy "$phy" interface add "$ifname" type mp mesh_id "$mesh_id"
-+				config_get mesh_pass "$vif" mesh_pass
++				config_get mesh_key "$vif" mesh_key
 +				# authsae starts the mesh otherwise
-+				[ -z "$mesh_pass" ] && start_mesh="mesh_id $mesh_id"
++				[ -z "$mesh_key" ] && start_mesh="mesh_id $mesh_id"
 +				iw phy "$phy" interface add "$ifname" type mp $start_mesh
  			;;
  			monitor)
@@ -108,8 +108,8 @@ index 461b248..5f7a570 100644
  				fi
  			;;
 +			mesh)
-+				config_get mesh_pass "$vif" mesh_pass
-+				if [ ! -z "$mesh_pass" ]; then
++				config_get mesh_key "$vif" mesh_key
++				if [ ! -z "$mesh_key" ]; then
 +					mac80211_authsae_setup_mbss "$vif"
 +				fi
 +			;;
