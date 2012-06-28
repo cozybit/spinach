@@ -1,28 +1,35 @@
 config wifi-device  radio0
         option type     mac80211
-        option channel  11
+        option channel  36
         option phy      phy0
-        option hwmode   11g
-	option disable 	1
+        option hwmode   11a
 
-config wifi-iface wlan0
+config wifi-iface
         option device   radio0
         option network  lan
-        option mode     mesh
-        option mesh_id  foo
+        option mode     ap
+        option ssid     OpenWrt
+        option encryption none
+        option disabled 1
 
 config wifi-device  radio1
         option type     mac80211
         option channel  11
         option phy      phy1
-        option hwmode   11g
+        option hwmode   11ng
         option htmode   HT20
         list ht_capab   SHORT-GI-40
+        list ht_capab   TX-STBC
+        list ht_capab   RX-STBC1
         list ht_capab   DSSS_CCK-40
+	# only 1 antenna on these
+        option diversity 0
+        option txantenna 1
+        option rxantenna 1
 
-config wifi-iface wlan1
+config wifi-iface
         option device   radio1
         option network  lan
         option mode     mesh
         option mesh_id  plant-mesh
-	option mesh_pass hello
+        option mesh_pass hello
