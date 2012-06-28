@@ -4,13 +4,10 @@ config wifi-device  radio0
         option phy      phy0
         option hwmode   11a
 
-config wifi-iface
+config wifi-iface ap0
         option device   radio0
         option network  lan
         option mode     ap
-        option ssid     plant-ap
-        option encryption psk2
-	option key	defaultkey
 
 config wifi-device  radio1
         option type     mac80211
@@ -27,9 +24,7 @@ config wifi-device  radio1
         option txantenna 1
         option rxantenna 1
 
-config wifi-iface
+config wifi-iface mesh0
         option device   radio1
         option network  lan
         option mode     mesh
-        option mesh_id  plant-mesh
-        option mesh_key hello

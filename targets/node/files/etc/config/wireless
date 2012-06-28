@@ -9,9 +9,7 @@ config wifi-device radio0
         list ht_capab   RX-STBC1
         list ht_capab   DSSS_CCK-40
 
-config wifi-iface wlan0
+config wifi-iface mesh0
         option device   radio0
         option network  lan
         option mode     mesh
-        option mesh_id  plant-mesh
-	option mesh_key hello

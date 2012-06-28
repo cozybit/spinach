@@ -1,6 +1,7 @@
 #!/bin/bash
 
 . spinach.conf
+. $DEPLOY_CONF
 
 fail () {
 	echo $*
@@ -39,4 +40,4 @@ get_openwrt_img() {
 # we can configure this as a string of associative arrays where each entry also
 # contains the type of the node. Need to change hostname to
 # $HOST_BASE-$TYPE-$XXXX
-export SPINACH_HOSTS=`avahi-browse -t -k _ssh._tcp | grep ${HOST_BASE} | awk '{print $7}'`
+export SPINACH_HOSTS=`avahi-browse -t -k _ssh._tcp | grep ${PM_HOST_BASE} | awk '{print $7}'`

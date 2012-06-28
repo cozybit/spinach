@@ -65,6 +65,15 @@ last release of wireless-testing/open80211s kernels.
 Before creating a release, the maintainer should create a new drop of
 compat-wireless, test it and commit it to the project.
 
+Configuration:
+==============
+
+Edit targets/common/files/etc/plantmesh.conf for general deployment knobs. Edit
+targets/<target>/files/etc/plantmesh_target.conf for target-specific options
+and overrides.
+
+spinach.conf maintains build and development related options.
+
 Other Documentation:
 ===================
 
