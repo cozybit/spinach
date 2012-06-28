@@ -4,11 +4,10 @@ config interface loopback
 	option ipaddr	127.0.0.1
 	option netmask	255.0.0.0
 
-config interface wlan
+# XXX: we can likely improve upon this "just bridge everything together"
+# approach!
+config interface lan
+	option ifname	"eth0 eth1"
 	option type	bridge
 	option proto	dhcp
 	option stp      1
-
-config interface ctl
-        option ifname   eth1
-        option proto    dhcp
