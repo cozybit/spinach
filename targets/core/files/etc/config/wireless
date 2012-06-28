@@ -9,7 +9,8 @@ config wifi-iface
         option network  lan
         option mode     ap
         option ssid     plant-ap
-        option encryption none
+        option encryption psk2
+	option key	defaultkey
 
 config wifi-device  radio1
         option type     mac80211
