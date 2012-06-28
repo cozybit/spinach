@@ -8,9 +8,8 @@ config wifi-iface
         option device   radio0
         option network  lan
         option mode     ap
-        option ssid     OpenWrt
+        option ssid     plant-ap
         option encryption none
-        option disabled 1
 
 config wifi-device  radio1
         option type     mac80211
