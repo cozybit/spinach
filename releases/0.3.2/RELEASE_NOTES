@@ -1,0 +1,77 @@
+RELEASE NOTES
+#############
+
+VERSION
+
+MeshNode release 0.3.2
+
+What's new:
+-----------
+
+ - secure AP by default (key: "defaultkey")
+ - LAN and WAN bridging on core and station
+
++ COMPONENTS
+
+ - Flashable images for a Mesh Node, Station and Core.
+
++ FEATURES
+
+ + MeshNode:
+    - secure mesh
+
+ + MeshStation:
+    - Radio 0 as mesh iface
+    - Radio 1 as AP
+    - Radio 0 & 1 bridged
+    - secure mesh
+
+ + MeshCore:
+    - Radio 0 as mesh iface
+    - eth0 & radio 0 bridged
+    - Vanilla LUCI installed
+	     URL: http://internal.o11s.org:7878	
+	     user: root
+	     password: plantmesh
+    - secure mesh
+  
++ CAVEATS
+
+  + This release assumes the station and cores are configured with SR71
+    (AR9280) radios as the second wifi interface. Secure mesh does not currently
+    work with the default installed cards.
+
++ HOWTO FLASH IMAGES
+
+1- Connect the MeshNode to a LAN with the network IP: 192.168.1.X. Make
+  sure that 192.168.1.20 is free, because that's the default IP of the
+  MeshNode while in "Upgrade Mode".
+
+2- Power on the MeshNode while holding the reset button (use a
+clip/thin pen). Hold the reset
+  button until you see two red and orange LEDs blinking.
+
+  Quick sanity check: see if the station is up in the network
+
+  $ ping 192.168.1.20
+
+3- Flashing the firmware:
+
+  $ atftp -p -l plant_mesh-mesh_node-release_0.1.bin 192.168.1.20
+
+  After the transfer completes, it will take a few minutes for the flashing to
+  complete.  When it completes, the MeshNode will reset and the LED pattern
+  will change.
+
++ HOWTO TEST THE RELEASE:
+
+1- Connect MeshCore to the LAN (a DHCP server is expected).
+2- Turn on MeshStation and MeshNode.
+3- Connect laptop A to MeshNode (through ethernet).
+4- Connect laptop B to the AP in the MeshStation (SSID: plant-mesh-AP).
+5- From laptop A/B: ping any node in the LAN (or yahoo.com if Internet
+access is available).
+
+Note: To access the Mesh Nodes:
+
+  ssh root@PM-<2_last_byte_mac>.local
