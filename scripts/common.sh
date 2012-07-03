@@ -61,4 +61,21 @@ get_openwrt_img() {
 	esac
 }
 
+# return latest openwrt release image file path from type
+# get_openwrt_img <node_type> <img_type>
+get_openwrt_img_release() {
+
+	local target=$1
+	local img_type=$2
+	local v=`find releases/ -maxdepth 1 -type d | cut -f2 -d'/' | sort -r | head -n1`
+	case $target in
+		node|core|station)
+			echo "releases/$v/$target/plant_mesh-$target-$img_type.bin"
+		;;
+		*)
+			fail "couldn't get img path: unknown node type!"
+		;;
+	esac
+}
+
 [ -z ${SPINACH_DIR} -o `basename $PWD` == ${SPINACH_DIR} ] || fail "This script must be executed from ${DIR}\'s root directory"
