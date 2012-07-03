@@ -8,12 +8,13 @@ fail () {
 	exit 1
 }
 
+SSH_OPTS="-o StrictHostKeyChecking=no -oBatchMode=yes -i $SSH_KEYFILE"
 _ssh () {
-	ssh -i ${SSH_KEYFILE} $*
+	ssh $SSH_OPTS $*
 }
 
 _scp () {
-	scp -i ${SSH_KEYFILE} $*
+	scp $SSH_OPTS $*
 }
 
 # enumerate reachable nodes in a string
