@@ -3,7 +3,7 @@
 . /etc/plantmesh.conf
 . /etc/plantmesh_target.conf
 
-. /sbin/hostname.sh
 . /sbin/plantmesh.sh
+. /sbin/hostname.sh
 
 echo "exit 0" > $0
