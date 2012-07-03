@@ -1,4 +1,4 @@
-From c00e529c83b1d82a444f9f22b602099e231c74af Mon Sep 17 00:00:00 2001
+From b939e59bfcf8004e84d0c7b4708478eedc6de9d4 Mon Sep 17 00:00:00 2001
 From: Peter Naulls <peter@chocky.org>
 Date: Thu, 25 Aug 2011 22:07:14 +0000
 Subject: [PATCH 2/3] authsae o11s authentication daemon

@@ -1,15 +1,15 @@
-From e649ba29e8521d191a2f4bdc7803ed06b72b0c42 Mon Sep 17 00:00:00 2001
+From bc1ed5d2aa36c1f5b22725cc6a6f4062b51875e5 Mon Sep 17 00:00:00 2001
 From: Thomas Pedersen <thomas@cozybit.com>
 Date: Thu, 14 Jun 2012 17:42:20 -0700
 Subject: [PATCH 3/3] authsae: add init scripts
 
-Now specifying "mesh_pass" in the vif config will start authsae.
+Now specifying "mesh_key" in the vif config will start authsae.
 ---
  package/mac80211/files/lib/wifi/mac80211.sh |   75 ++++++++++++++++++++++++++-
  1 files changed, 74 insertions(+), 1 deletions(-)
 
 diff --git a/package/mac80211/files/lib/wifi/mac80211.sh b/package/mac80211/files/lib/wifi/mac80211.sh
-index 461b248..ea41006 100644
+index 461b248..eefd74d 100644
 --- a/package/mac80211/files/lib/wifi/mac80211.sh
 +++ b/package/mac80211/files/lib/wifi/mac80211.sh
 @@ -1,6 +1,66 @@
@@ -73,7 +73,7 @@ index 461b248..ea41006 100644
 +	config_get ifname "$vif" ifname
 +
 +	mac80211_authsae_setup_base "$vif" "$cfgfile"
-+	meshd-nl80211 -c "$cfgfile" &> /var/log/authsae-$vif.log &
++	meshd-nl80211 -c "$cfgfile" &
 +}
 +
  mac80211_hostapd_setup_base() {
