@@ -1,0 +1,29 @@
+From 81111bbd6b767bc63aead13f212dc90de4434786 Mon Sep 17 00:00:00 2001
+From: Thomas Pedersen <thomas@cozybit.com>
+Date: Wed, 4 Jul 2012 12:49:25 -0700
+Subject: [PATCH 4/4] provide entry point for private spinach hacks in network
+ init script
+
+This is gross, but sometimes UCI does not do what we want, and
+implementing our needed feature the right way is too costly.
+
+Currently needed for our soft VLAN hack.
+---
+ package/netifd/files/etc/init.d/network |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/package/netifd/files/etc/init.d/network b/package/netifd/files/etc/init.d/network
+index ea93819..d84ceeb 100755
+--- a/package/netifd/files/etc/init.d/network
++++ b/package/netifd/files/etc/init.d/network
+@@ -22,6 +22,7 @@ start() {
+ 	sleep 1
+ 
+ 	/sbin/wifi up
++	/sbin/meshnet_hacks.sh
+ }
+ 
+ restart() {
+-- 
+1.7.5.4
+

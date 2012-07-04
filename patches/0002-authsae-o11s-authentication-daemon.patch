@@ -1,7 +1,7 @@
-From b939e59bfcf8004e84d0c7b4708478eedc6de9d4 Mon Sep 17 00:00:00 2001
+From 0a02376a519e371dedef4af894094c2548eb262f Mon Sep 17 00:00:00 2001
 From: Peter Naulls <peter@chocky.org>
 Date: Thu, 25 Aug 2011 22:07:14 +0000
-Subject: [PATCH 2/3] authsae o11s authentication daemon
+Subject: [PATCH 2/4] authsae o11s authentication daemon
 
 This adds the o11s cozybit authentication daemon fork of authsae (see o11s.org).
   This requires forthcoming work on o11s in the
