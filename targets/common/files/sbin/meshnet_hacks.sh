@@ -41,5 +41,5 @@ if [ $PM_TYPE = "core" ]; then
 	" > /etc/dnsmasq.conf
 	dnsmasq -C /etc/dnsmasq.conf
 else
-	udhcpc -p /var/run/udhcpc-$vlanif.pid -t 0 -b -i $vlanif &
+	udhcpc -p /var/run/udhcpc-$vlanif.pid -t 0 -h `cat /proc/sys/kernel/hostname` -b -i $vlanif &
 fi
