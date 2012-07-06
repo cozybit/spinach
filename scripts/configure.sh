@@ -22,6 +22,9 @@ done
 rm -rf openwrt/files
 cp -R targets/common/files openwrt/
 
+# stamp spinach version into plantmesh.conf
+echo "PM_VERSION=\"`git describe --tags --dirty`\"" >> openwrt/files/etc/plantmesh.conf
+
 # copy target specific config files
 cp targets/${TARGET}/openwrt.config openwrt/.config
 cp -R targets/${TARGET}/files openwrt/
