@@ -4,6 +4,15 @@
 # This seems ugly, we might be better served by passing a config file..
 
 # all nodes have a meshif (?)
+local _DEVICE=`uci get wireless.mesh0.device`
+if [ ! -z "$_DEVICE" ]; then
+	[ ! -z "$PM_MESH_CHANNEL" ] && \
+		uci set wireless.${_DEVICE}.channel=$PM_MESH_CHANNEL
+	[ ! -z "$PM_MESH_HWMODE" ] && \
+		uci set wireless.${_DEVICE}.hwmode=$PM_MESH_HWMODE
+	[ ! -z "$PM_MESH_HTMODE" ] && \
+		uci set wireless.${_DEVICE}.htmode=$PM_MESH_HTMODE
+fi
 uci set wireless.mesh0.mesh_id=$PM_MESHID
 if [ ! -z "$PM_MESHKEY" ]; then
 	uci set wireless.mesh0.mesh_key=$PM_MESHKEY
@@ -12,6 +21,15 @@ else
 fi
 
 # will just error if no ap0 exists, we don't care..
+local _DEVICE=`uci get wireless.ap0.device`
+if [ ! -z "$_DEVICE" ]; then
+	[ ! -z "$PM_AP_CHANNEL" ] && \
+		uci set wireless.${_DEVICE}.channel=$PM_AP_CHANNEL
+	[ ! -z "$PM_AP_HWMODE" ] && \
+		uci set wireless.${_DEVICE}.hwmode=$PM_AP_HWMODE
+	[ ! -z "$PM_AP_HTMODE" ] && \
+		uci set wireless.${_DEVICE}.htmode=$PM_AP_HTMODE
+fi
 uci set wireless.ap0.ssid=$PM_SSID
 if [ ! -z "$PM_KEY" ]; then
 	uci set wireless.ap0.encryption=psk2
@@ -20,7 +38,7 @@ else
 	uci set wireless.ap0.encryption=none
 fi
 
-# TODO: mesh/ap channels, hwmode, etc.
+# TODO: hwmode, etc.
 
 uci commit
 /etc/init.d/network restart
