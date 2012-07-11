@@ -1,0 +1,26 @@
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+
+/sbin/1stboot.sh
+
+# XXX FIXME: Disgusting hack! Disables openwrt's firewall then apply our own
+# rules to provide NAT between customer's LAN and the mesh VLAN on the mesh
+# core. The rules below were not behaving with openwrt's default rules (unable
+# to transmit on any network), so disable it for now.
+#
+# Better to integrate properly with /etc/config/firewall once support for
+# software VLAN interfaces is in UCI and /sbin/meshnet_hacks.sh can be done away
+# with.
+
+. /etc/plantmesh.conf
+
+local meshif=`iw dev | grep mesh -B2 | grep Inter | awk '{print $2}'`
+local vlanif="$meshif.$PM_MESH_VLAN_PORT"
+
+/etc/init.d/firewall stop
+
+iptables -t nat -I POSTROUTING -o br-lan -j MASQUERADE
+iptables -I FORWARD -i br-lan -o $vlanif -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -I FORWARD -i $vlanif -o br-lan -j ACCEPT
+
+exit 0

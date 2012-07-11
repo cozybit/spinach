@@ -1,6 +1,5 @@
 #!/bin/ash
 # hack in mesh vlan
-MESH_VLAN_PORT=777
 
 . /etc/plantmesh.conf
 . /etc/plantmesh_target.conf
@@ -9,10 +8,10 @@ local base_ip=`basename $PM_IP_BASE .0.0`
 
 # get meshif name
 local meshif=`iw dev | grep mesh -B2 | grep Inter | awk '{print $2}'`
-local vlanif="$meshif.$MESH_VLAN_PORT"
+local vlanif="$meshif.$PM_MESH_VLAN_PORT"
 
 # add mesh vlan if
-vconfig add $meshif $MESH_VLAN_PORT
+vconfig add $meshif $PM_MESH_VLAN_PORT
 ifconfig $vlanif up
 
 if [ $PM_TYPE = "core" ]; then
