@@ -20,7 +20,7 @@ index ea93819..d84ceeb 100755
  	sleep 1
  
  	/sbin/wifi up
-+	/sbin/meshnet_hacks.sh
++	/spinach/sbin/meshnet_hacks.sh
  }
  
  restart() {

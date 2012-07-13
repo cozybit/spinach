@@ -3,7 +3,7 @@
 . /etc/plantmesh.conf
 . /etc/plantmesh_target.conf
 
-. /sbin/plantmesh.sh
-. /sbin/hostname.sh
+. ${PM_SPINACH_DIR}/sbin/plantmesh.sh
+. ${PM_SPINACH_DIR}/sbin/hostname.sh
 
 echo "exit 0" > $0

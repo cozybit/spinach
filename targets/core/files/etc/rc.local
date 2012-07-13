@@ -1,7 +1,7 @@
 # Put your custom commands here that should be executed once
 # the system init finished. By default this file does nothing.
 
-/sbin/1stboot.sh
+/spinach/sbin/1stboot.sh
 
 # XXX FIXME: Disgusting hack! Disables openwrt's firewall then apply our own
 # rules to provide NAT between customer's LAN and the mesh VLAN on the mesh
@@ -9,7 +9,7 @@
 # to transmit on any network), so disable it for now.
 #
 # Better to integrate properly with /etc/config/firewall once support for
-# software VLAN interfaces is in UCI and /sbin/meshnet_hacks.sh can be done away
+# software VLAN interfaces is in UCI and /spinach/sbin/meshnet_hacks.sh can be done away
 # with.
 
 . /etc/plantmesh.conf

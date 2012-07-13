@@ -1,1 +1,1 @@
-../targets/common/files/sbin/common.sh
+../targets/common/files/spinach/sbin/common.sh
