@@ -31,3 +31,8 @@ cp -R targets/${TARGET}/files openwrt/
 
 # copy openwrt .config file
 cd openwrt && yes '' | make oldconfig &> /dev/null && cd ..
+
+# git only tracks executable bits
+# ssh keys need to avoid group and others write permisions
+chmod 644 `dirname $0`/../targets/common/files/etc/dropbear/authorized_keys
+chmod 600 `dirname $0`/../targets/common/files/spinach/keys/dev_key
