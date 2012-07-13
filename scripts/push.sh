@@ -34,7 +34,7 @@ while getopts  "h:f:t:a" options; do
 done
 
 if [ -n "$ALL" ]; then
-	for target in $SPINACH_TYPES; do
+	for target in $PM_TYPES; do
 		push_fw `get_openwrt_img_release $target sysupgrade` "`get_hosts -t $target`"
 	done
 else

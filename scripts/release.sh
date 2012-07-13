@@ -18,7 +18,7 @@ done
 [ -z "$V" ] && fail "please specify a release version!"
 
 TARGETS=$TYPE
-[ "$ALL" == "yes" ] && TARGETS="$SPINACH_TYPES"
+[ "$ALL" == "yes" ] && TARGETS="$PM_TYPES"
 
 ./scripts/fetch.sh
 for target in $TARGETS; do
