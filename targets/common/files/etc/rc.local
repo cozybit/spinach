@@ -1,6 +1,8 @@
 # Put your custom commands here that should be executed once
 # the system init finished. By default this file does nothing.
 
-/spinach/sbin/1stboot.sh
+. /etc/plantmesh.conf
+
+$PM_SPINACH_DIR/sbin/1stboot.sh
 
 exit 0
