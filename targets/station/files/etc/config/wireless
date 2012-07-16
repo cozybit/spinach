@@ -3,6 +3,15 @@ config wifi-device  radio0
         option channel  36
         option phy      phy0
         option hwmode   11a
+        list ht_capab 'SHORT-GI-40'
+        list ht_capab 'TX-STBC'
+        list ht_capab 'RX-STBC1'
+        list ht_capab 'DSSS_CCK-40'
+	# only 1 antenna on these
+        option diversity '0'
+        option txantenna '1'
+        option rxantenna '1'
+
 
 config wifi-iface ap0
         option device   radio0
