@@ -29,6 +29,8 @@ if [ $PM_TYPE = "core" ]; then
 	expand-hosts
 	domain=lan
 	server=/lan/  
+	dhcp-option=3,$base_ip.0.1
+	dhcp-option=6,$base_ip.0.1
 	dhcp-leasefile=/tmp/dhcp.leases
 	resolv-file=/tmp/resolv.conf.auto
 	stop-dns-rebind                  
