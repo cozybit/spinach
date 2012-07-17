@@ -8,6 +8,13 @@ PM_TARGET_ROOT=`dirname $0`/../targets/common/files
 ## Override SSH_OPTS on dev hosts where we have full openssh
 SSH_OPTS="-o StrictHostKeyChecking=no -oBatchMode=yes -i $SSH_KEYFILE"
 
+# print message and exit the script
+# usage: die <message>
+function die () {
+    echo ${*}
+    exit -1
+}
+
 # return openwrt image file path from type
 # get_openwrt_img <node_type> <img_type>
 get_openwrt_img() {
