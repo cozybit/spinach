@@ -10,4 +10,5 @@ config interface lan
 	option ifname	"eth0 eth1"
 	option type	bridge
 	option proto	dhcp
+	option dns	127.0.0.1
 	option stp      1
