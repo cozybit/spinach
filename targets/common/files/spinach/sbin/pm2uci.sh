@@ -38,7 +38,6 @@ else
 	uci set wireless.ap0.encryption=none
 fi
 
-# TODO: hwmode, etc.
-
 uci commit
+
 /etc/init.d/network restart
