@@ -4,19 +4,23 @@
 
 # path to private passphraseless ssh key used for node logins, don't share this
 # with anyone!
-SSH_KEYFILE="${PM_TARGET_ROOT}/spinach/keys/dev_key"
+
+# use the .db for dropbeard on targets
+SSH_KEYFILE="${PM_TARGET_ROOT}/spinach/keys/dev_key.db"
 
 fail () {
 	echo $*
 	exit 1
 }
 
-SSH_OPTS="-y -i $SSH_KEYFILE"
+SSH_OPTS="-i $SSH_KEYFILE -y"
 _ssh () {
-	ssh $SSH_OPTS $*
+	echo ssh $SSH_OPTS ${*}
+	ssh $SSH_OPTS ${*}
 }
 
 _scp () {
+	echo scp $SSH_OPTS $*
 	scp $SSH_OPTS $*
 }
 
@@ -40,7 +44,7 @@ get_hosts () {
 		esac
 	done
 
-	hosts=`avahi-browse -t -k _ssh._tcp | grep ${PM_HOST_BASE} | awk '{print $7}'`
+	hosts=`avahi-browse -t -k _ssh._tcp | grep ${PM_HOST_BASE} | awk '{print $7}' | sort | uniq`
 
 	# filter by $target
 	local matching_hosts=""
@@ -72,4 +76,21 @@ get_mesh_vlanif () {
 add_mesh_vlanif () {
 	vconfig add `get_mesh_if` $PM_MESH_VLAN_PORT
 	ifconfig `get_mesh_vlanif` up
+}
+
+# return image file path from type
+# get_openwrt_target_img_path <prefix> <node_type> <img_type>
+get_openwrt_target_img_path() {
+
+	local prefix="${1}"
+	local target="${2}"
+	local img_type="${3}"
+	case ${target} in
+		node|core|station)
+			echo "${prefix}/plant_mesh-${target}-${img_type}.bin"
+		;;
+		*)
+			fail "couldn't get img path: unknown node type!"
+		;;
+	esac
 }

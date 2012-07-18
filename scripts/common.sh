@@ -6,7 +6,8 @@ PM_TARGET_ROOT=`dirname $0`/../targets/common/files
 . `dirname $0`/common_core.sh
 
 ## Override SSH_OPTS on dev hosts where we have full openssh
-SSH_OPTS="-o StrictHostKeyChecking=no -oBatchMode=yes -i $SSH_KEYFILE"
+SSH_KEYFILE="${PM_TARGET_ROOT}/spinach/keys/dev_key"
+SSH_OPTS="-oStrictHostKeyChecking=no -oBatchMode=yes -i $SSH_KEYFILE"
 
 # return openwrt image file path from type
 # get_openwrt_img <node_type> <img_type>
@@ -26,7 +27,7 @@ get_openwrt_img() {
 }
 
 # return latest openwrt release image file path from type
-# get_openwrt_img <node_type> <img_type>
+# get_openwrt_img_release <node_type> <img_type>
 get_openwrt_img_release() {
 
 	local target=$1
