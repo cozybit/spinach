@@ -3,16 +3,12 @@
 
 . /etc/plantmesh.conf
 . /etc/plantmesh_target.conf
+. ${PM_SPINACH_DIR}/sbin/common.sh
 
 local base_ip=`basename $PM_IP_BASE .0.0`
+local vlanif=`get_mesh_vlanif`
 
-# get meshif name
-local meshif=`iw dev | grep mesh -B2 | grep Inter | awk '{print $2}'`
-local vlanif="$meshif.$PM_MESH_VLAN_PORT"
-
-# add mesh vlan if
-vconfig add $meshif $PM_MESH_VLAN_PORT
-ifconfig $vlanif up
+add_mesh_vlanif
 
 if [ $PM_TYPE = "core" ]; then
 	killall dnsmasq

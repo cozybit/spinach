@@ -56,3 +56,20 @@ get_hosts () {
 	fi
 	echo $matching_hosts
 }
+
+# deduce the mesh interface name
+get_mesh_if () {
+	echo `iw dev | grep mesh -B2 | grep Inter | awk '{print $2}'`
+}
+
+# deduce mesh vlan interface name
+get_mesh_vlanif () {
+	local meshif=`get_mesh_if`
+	echo "$meshif.$PM_MESH_VLAN_PORT"
+}
+
+# add the mesh vlan interface, useful so as not to spread this around too much
+add_mesh_vlanif () {
+	vconfig add `get_mesh_if` $PM_MESH_VLAN_PORT
+	ifconfig `get_mesh_vlanif` up
+}
