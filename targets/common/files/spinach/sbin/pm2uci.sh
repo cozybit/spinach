@@ -38,6 +38,14 @@ else
 	uci set wireless.ap0.encryption=none
 fi
 
+# provisioning interface
+if [ $PM_TYPE == "core" ]; then
+	uci set network.prov.ipaddr=$PM_PROV_CORE_IP
+else
+	uci set network.prov.ipaddr=$PM_PROV_NODE_IP
+fi
+uci set network.prov.netmask=255.255.255.0
+
 uci commit
 
 /etc/init.d/network restart
