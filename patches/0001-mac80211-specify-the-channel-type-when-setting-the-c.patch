@@ -1,7 +1,7 @@
-From 9248ba71ebb242f0efc39229e68b9a0778c9b49e Mon Sep 17 00:00:00 2001
+From 19609a6d8c6385a4e00e943735c07ffe14359ab8 Mon Sep 17 00:00:00 2001
 From: "Guillermo A. Nunez" <guillermo@cozybit.com>
 Date: Tue, 8 May 2012 19:46:42 -0700
-Subject: [PATCH 1/4] mac80211: specify the channel type when setting the
+Subject: [PATCH 1/5] mac80211: specify the channel type when setting the
  channel.
 
 This is needed to allow HT mode in mesh ifaces.

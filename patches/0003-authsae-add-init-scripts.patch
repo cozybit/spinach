@@ -1,7 +1,7 @@
-From d31fe82357fbf7adcd56d64abf57ae4e44516788 Mon Sep 17 00:00:00 2001
+From bbee3abcec5d8d0bd3b11741cca8b2645477cf3f Mon Sep 17 00:00:00 2001
 From: Thomas Pedersen <thomas@cozybit.com>
 Date: Thu, 14 Jun 2012 17:42:20 -0700
-Subject: [PATCH 3/4] authsae: add init scripts
+Subject: [PATCH 3/5] authsae: add init scripts
 
 Now specifying "mesh_key" in the vif config will start authsae.
 ---

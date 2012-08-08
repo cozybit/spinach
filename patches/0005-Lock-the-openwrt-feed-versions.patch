@@ -1,11 +1,11 @@
-From 3ba99d0e9ab694fe87787320627d90c6a239b695 Mon Sep 17 00:00:00 2001
+From 31175bc96558c88101d50d625182f79f3cf72381 Mon Sep 17 00:00:00 2001
 From: Jason Abele <jason@cozybit.com>
 Date: Wed, 11 Jul 2012 16:53:14 -0700
 Subject: [PATCH 5/5] Lock the openwrt feed versions
 
 ---
  feeds.conf.default |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/feeds.conf.default b/feeds.conf.default
 index 518bf68..ae6af3a 100644
@@ -22,5 +22,5 @@ index 518bf68..ae6af3a 100644
  #src-svn efl svn://svn.openwrt.org/openwrt/feeds/efl
  #src-svn xorg svn://svn.openwrt.org/openwrt/feeds/xorg
 -- 
-1.7.9.5
+1.7.5.4
 
