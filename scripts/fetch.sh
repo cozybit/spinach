@@ -2,9 +2,9 @@
 
 source `dirname $0`/common.sh
 
-[ -d openwrt ] && fail "ERROR: Default openwrt directory already exits. Aborting." 
-git clone git://nbd.name/openwrt.git --no-checkout || fail "ERROR: git clone failed. Aborting. "
+[ -d openwrt ] || { git clone git://nbd.name/openwrt.git --no-checkout || fail "ERROR: git clone failed. Aborting. "; }
 pushd openwrt
+git fetch
 git checkout ${OPENWRT_COMMIT} || fail "ERROR: git checkout failed. Aborting."
 
 # apply patches
