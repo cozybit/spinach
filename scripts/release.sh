@@ -31,7 +31,7 @@ for target in $TARGETS; do
 done
 
 # ok so we're not testing..
-if [ $ALL = "yes" ]; then
+if [ "$ALL" == "yes" ]; then
 	cp releases/RELEASE_NOTE_TEMPLATE releases/$V/RELEASE_NOTES
 	vi releases/$V/RELEASE_NOTES
 	cd releases/
