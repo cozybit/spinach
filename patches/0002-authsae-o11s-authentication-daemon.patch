@@ -1,4 +1,4 @@
-From 0c58ef25438b958fc247da21dc80e2b520855169 Mon Sep 17 00:00:00 2001
+From 704856a4518fbae63f44b82e1fba51d3825a3a7a Mon Sep 17 00:00:00 2001
 From: Peter Naulls <peter@chocky.org>
 Date: Thu, 25 Aug 2011 22:07:14 +0000
 Subject: [PATCH 2/5] authsae o11s authentication daemon
@@ -10,19 +10,22 @@ this under OpenWrt right now.
 
 I have not added any init scripts, etc.
 
+10/01/2012 Modified to build authsae with cmake properly
+
 Signed-off-by: Peter Naulls <peter@chocky.org>
+Signed-off-by: Jason Abele <jason@cozybit.com>
 ---
- package/authsae/Makefile |   44 ++++++++++++++++++++++++++++++++++++++++++++
+ package/authsae/Makefile |   54 ++++++++++++++++++++++++++++++++++++++++++++++
  package/openssl/Makefile |    6 +++++-
- 2 files changed, 49 insertions(+), 1 deletions(-)
+ 2 files changed, 59 insertions(+), 1 deletion(-)
  create mode 100644 package/authsae/Makefile
 
 diff --git a/package/authsae/Makefile b/package/authsae/Makefile
 new file mode 100644
-index 0000000..ba84b93
+index 0000000..b39ac16
 --- /dev/null
 +++ b/package/authsae/Makefile
-@@ -0,0 +1,44 @@
+@@ -0,0 +1,54 @@
 +
 +# Copyright (C) 2007-2010 OpenWrt.org
 +#
@@ -62,6 +65,16 @@ index 0000000..ba84b93
 +
 +TARGET_CFLAGS += -D_GNU_SOURCE
 +
++define Package/authsae/install
++	$(INSTALL_DIR) $(1)/etc
++	$(INSTALL_DIR) $(1)/usr
++	$(INSTALL_DIR) $(1)/usr/bin
++	$(INSTALL_CONF) $(PKG_INSTALL_DIR)/etc/authsae.cfg $(1)/etc
++	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/meshd $(1)/usr/bin/
++	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/meshd-nl80211 $(1)/usr/bin/
++	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/mon $(1)/usr/bin/
++endef
++
 +define Package/conffiles
 +	/etc/authsae.cfg
 +endef
@@ -92,5 +105,5 @@ index a696dd7..51231bc 100644
  
  define Build/Configure
 -- 
-1.7.5.4
+1.7.9.5
 
