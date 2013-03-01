@@ -1,31 +1,25 @@
-From 704856a4518fbae63f44b82e1fba51d3825a3a7a Mon Sep 17 00:00:00 2001
-From: Peter Naulls <peter@chocky.org>
-Date: Thu, 25 Aug 2011 22:07:14 +0000
-Subject: [PATCH 2/5] authsae o11s authentication daemon
+From 5ba336bd2f35b4c3f11c555b4a9c5c6e22051e56 Mon Sep 17 00:00:00 2001
+From: Sam Leffler <sleffler@google.com>
+Date: Fri, 22 Feb 2013 09:04:28 -0800
+Subject: [PATCH] mac80211: add support for authsae
 
-This adds the o11s cozybit authentication daemon fork of authsae (see o11s.org).
-  This requires forthcoming work on o11s in the
-kernel/compat-wireless et al. but there are people interested in running
-this under OpenWrt right now.
+Mailing list patches to use authsae to manage a secure mesh when mesh_key
+is specified in the config file.
 
-I have not added any init scripts, etc.
-
-10/01/2012 Modified to build authsae with cmake properly
-
-Signed-off-by: Peter Naulls <peter@chocky.org>
-Signed-off-by: Jason Abele <jason@cozybit.com>
+Signed-off-by: Thomas Pedersen <thomas@cozybit.com>
 ---
- package/authsae/Makefile |   54 ++++++++++++++++++++++++++++++++++++++++++++++
- package/openssl/Makefile |    6 +++++-
- 2 files changed, 59 insertions(+), 1 deletion(-)
+ package/authsae/Makefile                    |   51 ++++++++++++++++++
+ package/libs/openssl/Makefile               |    6 ++-
+ package/mac80211/files/lib/wifi/mac80211.sh |   75 ++++++++++++++++++++++++++-
+ 3 files changed, 130 insertions(+), 2 deletions(-)
  create mode 100644 package/authsae/Makefile
 
 diff --git a/package/authsae/Makefile b/package/authsae/Makefile
 new file mode 100644
-index 0000000..b39ac16
+index 0000000..22307b9
 --- /dev/null
 +++ b/package/authsae/Makefile
-@@ -0,0 +1,54 @@
+@@ -0,0 +1,51 @@
 +
 +# Copyright (C) 2007-2010 OpenWrt.org
 +#
@@ -65,35 +59,32 @@ index 0000000..b39ac16
 +
 +TARGET_CFLAGS += -D_GNU_SOURCE
 +
-+define Package/authsae/install
-+	$(INSTALL_DIR) $(1)/etc
-+	$(INSTALL_DIR) $(1)/usr
-+	$(INSTALL_DIR) $(1)/usr/bin
-+	$(INSTALL_CONF) $(PKG_INSTALL_DIR)/etc/authsae.cfg $(1)/etc
-+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/meshd $(1)/usr/bin/
-+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/meshd-nl80211 $(1)/usr/bin/
-+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/mon $(1)/usr/bin/
-+endef
-+
 +define Package/conffiles
 +	/etc/authsae.cfg
 +endef
 +
++define Package/authsae/install
++	$(INSTALL_DIR) $(1)/usr/bin
++	$(INSTALL_DIR) $(1)/etc
++	$(CP) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin/
++	$(CP) $(PKG_INSTALL_DIR)/etc/* $(1)/etc/
++endef
++
 +$(eval $(call BuildPackage,authsae))
-diff --git a/package/openssl/Makefile b/package/openssl/Makefile
-index a696dd7..51231bc 100644
---- a/package/openssl/Makefile
-+++ b/package/openssl/Makefile
-@@ -74,7 +74,7 @@ endef
+diff --git a/package/libs/openssl/Makefile b/package/libs/openssl/Makefile
+index a8b3257..3234797 100644
+--- a/package/libs/openssl/Makefile
++++ b/package/libs/openssl/Makefile
+@@ -75,7 +75,7 @@ endef
  
  OPENSSL_NO_CIPHERS:= no-idea no-md2 no-mdc2 no-rc5 no-sha0 no-smime \
- 					no-rmd160 no-aes192 no-ripemd no-camellia no-ans1 no-krb5
+ 	no-rmd160 no-aes192 no-ripemd no-camellia no-ans1 no-krb5
 -OPENSSL_OPTIONS:= shared no-ec no-err no-hw no-threads zlib-dynamic no-sse2
 +OPENSSL_OPTIONS:= shared no-err no-hw no-threads zlib-dynamic no-sse2
  
- ifdef CONFIG_OPENSSL_ENGINE
+ ifdef CONFIG_OPENSSL_ENGINE_CRYPTO
    OPENSSL_OPTIONS += -DHAVE_CRYPTODEV
-@@ -82,6 +82,10 @@ else
+@@ -86,6 +86,10 @@ else
    OPENSSL_OPTIONS += no-engines
  endif
  
@@ -101,9 +92,117 @@ index a696dd7..51231bc 100644
 +  OPENSSL_OPTIONS += no-ec
 +endif
 +
- OPENSSL_OPTIONS += no-perlasm
+ ifeq ($(CONFIG_x86_64),y)
+   OPENSSL_TARGET:=linux-x86_64
+ else
+diff --git a/package/mac80211/files/lib/wifi/mac80211.sh b/package/mac80211/files/lib/wifi/mac80211.sh
+index 1ad3eb5..92cdb4c 100644
+--- a/package/mac80211/files/lib/wifi/mac80211.sh
++++ b/package/mac80211/files/lib/wifi/mac80211.sh
+@@ -1,6 +1,66 @@
+ #!/bin/sh
+ append DRIVERS "mac80211"
  
- define Build/Configure
++mac80211_authsae_setup_base() {
++	local vif="$1"
++	local cfgfile="$2"
++
++	config_get ifname "$vif" ifname
++	config_get meshid "$vif" mesh_id
++	config_get mesh_key "$vif" mesh_key
++	config_get device "$vif" device
++	config_get hwmode "$device" hwmode
++	config_get channel "$device" channel
++	config_get htmode "$device" htmode
++
++	case "$htmode" in
++		HT20|HT40+|HT40-) htmode="$htmode";;
++		NOHT|none|*) htmode="none";;
++	esac
++
++	case "$hwmode" in
++		*g*) band=11g;;
++		*a*) band=11a;;
++	esac
++
++	cat > "$cfgfile" <<EOF
++authsae:
++{
++ sae:
++  {
++    debug = 480;
++    password = "$mesh_key";
++    group = [19, 26, 21, 25, 20];
++    blacklist = 5;
++    thresh = 5;
++    lifetime = 3600;
++  };
++ meshd:
++  {
++    meshid = "$meshid";
++    interface = "$ifname";
++    passive = 0;
++    debug = 1;
++    mediaopt = 1;
++    band = "$band";
++    channel = $channel;
++    htmode = "$htmode";
++  };
++};
++
++EOF
++}
++
++mac80211_authsae_setup_mbss() {
++	local vif="$1"
++
++	cfgfile="/var/run/authsae-$vif.conf"
++	config_get ifname "$vif" ifname
++
++	mac80211_authsae_setup_base "$vif" "$cfgfile"
++	meshd-nl80211 -c "$cfgfile" &
++}
++
+ mac80211_hostapd_setup_base() {
+ 	local phy="$1"
+ 	local ifname="$2"
+@@ -255,6 +315,9 @@ disable_mac80211() (
+ 			grep "$wdev" /proc/$pid/cmdline >/dev/null && \
+ 				kill $pid
+ 		done
++		for pid in `pidof meshd-nl80211`; do
++			kill $pid
++		done
+ 		ifconfig "$wdev" down 2>/dev/null
+ 		unbridge "$dev"
+ 		iw dev "$wdev" del
+@@ -352,8 +415,12 @@ enable_mac80211() {
+ 				[ "$apidx" -gt 1 ] || iw phy "$phy" interface add "$ifname" type managed
+ 			;;
+ 			mesh)
++				local start_mesh
+ 				config_get mesh_id "$vif" mesh_id
+-				iw phy "$phy" interface add "$ifname" type mp mesh_id "$mesh_id"
++				config_get mesh_key "$vif" mesh_key
++				# authsae starts the mesh otherwise
++				[ -z "$mesh_key" ] && start_mesh="mesh_id $mesh_id"
++				iw phy "$phy" interface add "$ifname" type mp $start_mesh
+ 			;;
+ 			monitor)
+ 				iw phy "$phy" interface add "$ifname" type monitor
+@@ -518,6 +585,12 @@ enable_mac80211() {
+ 					}
+ 				fi
+ 			;;
++			mesh)
++				config_get mesh_key "$vif" mesh_key
++				if [ ! -z "$mesh_key" ]; then
++					mac80211_authsae_setup_mbss "$vif"
++				fi
++			;;
+ 		esac
+ 		[ "$mode" = "ap" ] || mac80211_start_vif "$vif" "$ifname"
+ 	done
 -- 
 1.7.9.5
 
